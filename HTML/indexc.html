@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue de Produits</title>
+  <link rel="stylesheet" href="/CSS/stylec.css">
+</head>
+<body>
+
+  <!-- Header avec le titre du catalogue -->
+  <header>
+    <h1>Catalogue de Produits</h1>
+  </header>
+
+  <!-- Filtres -->
+  <input type="text" id="search" placeholder="Rechercher un produit..." oninput="filterProducts()">
+
+  <div class="container">
+    <!-- Liste des produits -->
+    <div class="products" id="product-list">
+      <!-- Produits générés en JS -->
+    </div>
+
+    <!-- Panier -->
+    <div class="cart" id="cart">
+      <h2>Panier</h2>
+      <div id="cart-items"></div>
+      <div class="cart-summary">
+        <span>Total:</span> <span id="cart-total">0 €</span>
+      </div>
+      <button onclick="confirmPurchase()">Acheter</button>
+    </div>
+  </div>
+
+  <script src="/JS/catalogue.js"></script>
+</body>
+</html>
