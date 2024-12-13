@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*Root Variabels*/
+:root{
+    --color-primary:#7380ec;
+    --color-danger:#ff7782;
+    --color-succes:#41f1b6;
+    --color-warning:#ffbb55;
+    --color-white:#fff;
+    --color-info-dark:#7d8da1;
+    --color-info-light:#dce1eb;
+    --color-dark:#363949;
+    --color-light:rgba(132,139,200,0.18);
+    --color-primary-variant:#111e88;
+    --color-dark-variant:#677483;
+    --color-background:#f6f6f9;
+
+    --card-border-radius: 2rem;
+    --border-radius-1: 0.4rem;
+    --border-radius-2: 0.8rem;
+    --border-radius-3: 1.2rem;
+
+    --card-padding: 1.8rem;
+    --padding-1: 1.2rem;
+
+    --box-shadow: 0 2rem 3rem var(--color-light);
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: var(--color-background);
+}
+
+button{
+    border: 0;
+}
+
+/******************NAVIGATION-BAR*******************/
+
+nav{
+    background-color: var(--color-background);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    transition: 0.3s ease-in-out;
+}
+
+#navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    place-items: center;
+    width: 85%;
+    margin: auto;
+    padding: 12px;
+}
+
+#navbar-logo img{
+    width: 100px;
+    height: 100px;
+}
+
+#navbar-links {
+    display: flex;
+    place-items: center;
+    flex-direction: row;
+}
+
+#navbar-links ul {
+     list-style: none;
+     display: flex;
+     flex-direction: row;
+}
+
+#navbar-links li {
+    margin-left: 60px;  
+}
+
+#navbar-links a{
+    text-decoration: none;
+    color: rgb(64, 64, 64);
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+#navbar-links ul a:hover{
+    color: rgb(65,105,255);
+}
+
+#navbar-tools {
+    display: flex;
+    flex-direction: row;
+    margin-left: 60px;
+}
+
+#navbar-tools a{
+    display: flex;
+    place-items: center;
+}
+
+#navbar-tools span{
+    background-color: var(--color-danger);
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    color: white;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    position: relative;
+    bottom: 8px;
+    right: 10px;
+}
+
+#wishlist-link{
+    margin-left: 15px;
+}
+
+/******************PRODUCT-PAGE-MAIN-BODY*******************/
+
+#product-page-body{
+   padding: 0 100px;
+}
+
+/******************TOP-SECTION-OF-MAIN-BODY*******************/
+
+#product-top-container{
+   padding: 125px;
+   padding-bottom: 50px;
+   display: flex;
+   justify-content: center;
+}
+#product-top-wrapper{
+    background-color: #c7d5f1;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    padding: 100px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+    justify-content: space-between;
+}
+
+#product-top-text-section{
+    width: 52%;
+}
+
+#product-top-text-section h1{
+    color: rgb(64,64,64);
+    font-size: 23px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+}
+
+#product-top-text-section h2{
+    color: rgb(64,64,64);
+    font-size: 45px;
+    font-weight: 500;
+}
+
+#product-top-text-section p{
+    color: rgb(137,137,137);
+    font-size: 17px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+    line-height: 1.7;
+}
+
+.blue-button{
+    background-color: #3b71dc;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    transition: 0.3s ease-in-out;
+}
+
+.blue-button:hover{
+    background-color: rgb(102, 136, 240);
+}
+
+#product-top-text-section button{
+    padding: 15px 45px;
+    border-radius: 5px;
+    font-size: 17px;
+}
+
+#product-top-image-section{
+    background-color: white;
+    width: 420px;
+    height: 420px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    place-items: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+#product-top-image-section img{
+    height: 70%;
+    width: auto;
+}
+
+#product-top-image-section img:hover{
+    animation: shake 0.5s linear infinite;
+    cursor: pointer;
+}
+
+@keyframes shake {
+    0%{
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(3deg);
+    }
+    50%{
+        transform: rotate(0deg);
+    }
+    75%{
+        transform: rotate(-3deg);
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+}
