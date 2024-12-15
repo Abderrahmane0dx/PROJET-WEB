@@ -246,6 +246,10 @@ nav{
     place-items: center;
 }
 
+#product-category-container #product-category-wrapper a{
+    text-decoration: none;
+}
+
 .blue-line{
     height: 40px;
     width: 15px;

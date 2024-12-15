@@ -34,15 +34,7 @@ document.addEventListener('DOMContentLoaded', () =>{
         wishlistCount.innerHTML = document.querySelectorAll('.heart-button.active').length;
     });
   })
-  //****************ADDING-ITEMS-TO-THE-WISH-LIST****************//
-  let wishlistCount = document.querySelector('#wishlist-link span');
-  let heartbutton = document.querySelectorAll('.heart-button');
-  heartbutton.forEach((button) => {
-    button.addEventListener('click', () => {
-        button.classList.toggle('active');
-        wishlistCount.innerHTML = document.querySelectorAll('.heart-button.active').length;
-    });
-  })
+  
 
   
 })
