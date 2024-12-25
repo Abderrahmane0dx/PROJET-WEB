@@ -2,6 +2,8 @@ const loginBtn =  document.querySelector("#login");
 const registerBtn =  document.querySelector("#register");
 const loginForm =  document.querySelector(".login-form");
 const registerForm =  document.querySelector(".register-form");
+const usernameInput = loginForm.querySelector('input[name="username"]');
+const passwordInput = loginForm.querySelector('input[name="password"]');
 
 
 loginBtn.addEventListener('click',()=>{
@@ -31,39 +33,50 @@ registerBtn.addEventListener('click',()=>{
     document.querySelector(".col-1").style.borderRadius = "0 20% 30% 0";
 })
 
-// Handle login form submission
-document.querySelector(".login-form .input-submit").addEventListener('click', function (event) {
-    event.preventDefault();
+loginForm.addEventListener('submit', (event) => {
+    event.preventDefault();  // Prevent form submission
 
-    const username = document.querySelector('.login-form [name="username"]').value;
-    const password = document.querySelector('.login-form [name="password"]').value;
+    const username = usernameInput.value;
+    const password = passwordInput.value;
 
-    // Perform basic validation on the client side
-    if (username === "" || password === "") {
-        alert("Please fill in both fields.");
-        return;
-    }
-
-    // Create an AJAX request
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "login.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    // Send the login data to PHP
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            let response = JSON.parse(xhr.responseText);
-
-            if (response.status === 'success') {
-                // Redirect to the main page (you can change this URL)
-                window.location.href = '/HTML/client.html'; // Example: redirect to homepage
-            } else {
-                // Show an error message if login fails
-                alert(response.message); // Shows "Incorrect username or password"
-            }
+    // Send login data using fetch API
+    fetch('../PHP/login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username: username,
+            password: password
+        })
+    })
+    .then(response => response.text())
+    .then(text => {
+        console.log('Raw response:', text);  // Log raw response
+        return JSON.parse(text);  // Manually parse the JSON
+    })
+    .then(data => {
+        if (data.success) {
+            window.location.href = "../HTML/client.html";  // Redirect to client page
+        } else {
+            usernameInput.style.border = "4px solid red";
+            passwordInput.style.border = "4px solid red";
+            alert(data.message);
         }
-    };
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
 
-    // Send the username and password to the PHP backend
-    xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+// Remove red border when user starts typing in username field
+usernameInput.addEventListener('input', () => {
+    usernameInput.style.border = "";
+    passwordInput.style.border = "";
+});
+
+// Remove red border when user starts typing in password field
+passwordInput.addEventListener('input', () => {
+    usernameInput.style.border = "";
+    passwordInput.style.border = "";
 });

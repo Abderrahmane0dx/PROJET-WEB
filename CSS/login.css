@@ -12,7 +12,7 @@
 /********************BODY********************/
 
 body{
-    background: url("/PROJECT-PHOTOS/LOGIN/finalbg.jpg");
+    background: url("../PROJECT-PHOTOS/LOGIN/finalbg.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -21,6 +21,7 @@ body{
     justify-content: center;
     min-height: 100vh;
     padding: 0 20px;
+    color: rgb(211, 26, 57);
 }
 
 /********************FORM********************/

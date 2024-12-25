@@ -1,48 +1,58 @@
 <?php
+// register.php
+
+// Include the database connection file
+require_once 'db.php';  // Include the db.php file
+
+// Start a session
 session_start();
-include('db.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// Allow CORS for testing purposes (remove in production)
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
-    if (empty($email) || empty($username) || empty($password)) {
-        echo json_encode(['status' => 'error', 'message' => 'Please fill in all fields.']);
-        exit;
-    }
+// Get data from the client
+$data = json_decode(file_get_contents("php://input"), true);
+$email = $data['email'];
+$username = $data['username'];
+$password = $data['password'];
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid email format.']);
-        exit;
-    }
+// Hash the password for security
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    if (strlen($password) < 8) {
-        echo json_encode(['status' => 'error', 'message' => 'Password must be at least 8 characters long.']);
-        exit;
-    }
+// Check if username or email already exists
+$sql_check = "SELECT * FROM users WHERE username = ? OR email = ?";
+$stmt_check = $conn->prepare($sql_check);
+$stmt_check->bind_param("ss", $username, $email);
+$stmt_check->execute();
+$result_check = $stmt_check->get_result();
 
-    try {
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username OR email = :email");
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
+if ($result_check->num_rows > 0) {
+    echo json_encode(["success" => false, "message" => "Username or Email already exists."]);
+} else {
+    // Insert the user into the database
+    $sql_insert = "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
+    $stmt_insert = $conn->prepare($sql_insert);
+    $stmt_insert->bind_param("sss", $email, $username, $hashed_password);
+    
+    if ($stmt_insert->execute()) {
+        // Get the last inserted ID
+        $user_id = $stmt_insert->insert_id;
 
-        if ($stmt->rowCount() > 0) {
-            echo json_encode(['status' => 'error', 'message' => 'Username or email already exists.']);
-        } else {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-            $stmt = $pdo->prepare("INSERT INTO users (username, email, password) VALUES (:username, :email, :password)");
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':password', $hashedPassword);
-            $stmt->execute();
+        // Set session variables
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['username'] = $username;
 
-            $_SESSION['username'] = $username;
-            echo json_encode(['status' => 'success']);
-        }
-    } catch (PDOException $e) {
-        echo json_encode(['status' => 'error', 'message' => 'An error occurred: ' . $e->getMessage()]);
+        // Set cookies for 30 days
+        setcookie('user_id', $user_id, time() + (30 * 24 * 60 * 60), '/');  // Expires in 30 days
+        setcookie('username', $username, time() + (30 * 24 * 60 * 60), '/');
+
+        echo json_encode(["success" => true, "message" => "Account created successfully."]);
+    } else {
+        echo json_encode(["success" => false, "message" => "Failed to create account."]);
     }
 }
+
+// Close the database connection
+$conn->close();
 ?>
