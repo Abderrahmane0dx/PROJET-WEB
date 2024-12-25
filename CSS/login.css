@@ -32,7 +32,7 @@ body{
     border: 3px solid rgba(255,255,255,0.3);
     border-radius: 30px;
     backdrop-filter: blur(20px);
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 /********************FIRST-COLUMN********************/
@@ -73,6 +73,13 @@ body{
 }
 
 /********************SECOND COLUMN********************/
+
+.col-2{
+    position: relative;
+    width: 45%;
+    padding: 20px;
+    overflow: hidden;
+}
 
 .btn-box{
     display: flex;
@@ -128,7 +135,7 @@ body{
 }
 
 .register-form .form-title{
-    margin-block: 40px;
+    margin-block: 40px 20px;
 }
 
 .form-title{
