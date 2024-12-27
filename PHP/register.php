@@ -1,58 +1,68 @@
 <?php
-// register.php
-
-// Include the database connection file
-require_once 'db.php';  // Include the db.php file
-
-// Start a session
+// Include the database connection
+include('db.php');
+header('Content-Type: application/json');
 session_start();
 
-// Allow CORS for testing purposes (remove in production)
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-
-// Get data from the client
-$data = json_decode(file_get_contents("php://input"), true);
-$email = $data['email'];
-$username = $data['username'];
-$password = $data['password'];
-
-// Hash the password for security
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-// Check if username or email already exists
-$sql_check = "SELECT * FROM users WHERE username = ? OR email = ?";
-$stmt_check = $conn->prepare($sql_check);
-$stmt_check->bind_param("ss", $username, $email);
-$stmt_check->execute();
-$result_check = $stmt_check->get_result();
-
-if ($result_check->num_rows > 0) {
-    echo json_encode(["success" => false, "message" => "Username or Email already exists."]);
-} else {
-    // Insert the user into the database
-    $sql_insert = "INSERT INTO users (email, username, password) VALUES (?, ?, ?)";
-    $stmt_insert = $conn->prepare($sql_insert);
-    $stmt_insert->bind_param("sss", $email, $username, $hashed_password);
-    
-    if ($stmt_insert->execute()) {
-        // Get the last inserted ID
-        $user_id = $stmt_insert->insert_id;
-
-        // Set session variables
-        $_SESSION['user_id'] = $user_id;
-        $_SESSION['username'] = $username;
-
-        // Set cookies for 30 days
-        setcookie('user_id', $user_id, time() + (30 * 24 * 60 * 60), '/');  // Expires in 30 days
-        setcookie('username', $username, time() + (30 * 24 * 60 * 60), '/');
-
-        echo json_encode(["success" => true, "message" => "Account created successfully."]);
-    } else {
-        echo json_encode(["success" => false, "message" => "Failed to create account."]);
-    }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['error' => 'Only POST requests are allowed']);
+    http_response_code(405);
+    exit();
 }
 
-// Close the database connection
-$conn->close();
+$data = json_decode(file_get_contents('php://input'), true);
+
+if ($data === null) {
+    echo json_encode(['error' => 'Invalid JSON received']);
+    exit();
+}
+
+// Extract fields
+$username = $data['username'];
+$password = $data['password'];
+$email = $data['email'];
+
+if (empty($username) || empty($password) || empty($email)) {
+    echo json_encode(['error' => 'All fields are required']);
+    exit();
+}
+
+try {
+    // Check if the username already exists
+    $query = $connection->prepare("SELECT username FROM users WHERE username = ?");
+    $query->execute([$username]);
+    if ($query->fetch()) {
+        echo json_encode(['error' => 'Username already exists']);
+        exit();
+    }
+
+    // Check if the password already exists
+    $passwordQuery = $connection->prepare("SELECT password FROM users");
+    $passwordQuery->execute();
+    $allPasswords = $passwordQuery->fetchAll(PDO::FETCH_COLUMN);
+
+    foreach ($allPasswords as $hashedPassword) {
+        if (password_verify($password, $hashedPassword)) {
+            echo json_encode(['error' => 'Please choose a more secure password.']);
+            exit();
+        }
+    }
+
+    // Insert the new user
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+    $insertQuery = $connection->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+    $insertQuery->execute([$username, $hashedPassword, $email]);
+
+    // Start a session for the new user
+    $_SESSION['user'] = ['username' => $username];
+
+    echo json_encode([
+        'status' => 'success',
+        'message' => 'Registration successful',
+        'username' => $username,
+    ]);
+} catch (PDOException $e) {
+    echo json_encode(['error' => 'Database error', 'message' => $e->getMessage()]);
+}
+exit();
 ?>

@@ -1,11 +1,12 @@
 const loginBtn =  document.querySelector("#login");
 const registerBtn =  document.querySelector("#register");
 const loginForm =  document.querySelector(".login-form");
-const registerForm =  document.querySelector(".register-form");
 const usernameInput = loginForm.querySelector('input[name="username"]');
 const passwordInput = loginForm.querySelector('input[name="password"]');
+const loginhandeler = document.getElementById('loginbtn');
 
 
+//adding an event listener to change from the signup form to the signin form:
 loginBtn.addEventListener('click',()=>{
     loginBtn.style.backgroundColor = "#21264D";
     registerBtn.style.backgroundColor = "rgba(255,255,255,0.2)";
@@ -20,6 +21,7 @@ loginBtn.addEventListener('click',()=>{
 
 })
 
+//adding an event listener to change from the signin form to the signup form:
 registerBtn.addEventListener('click',()=>{
     loginBtn.style.backgroundColor = "rgba(255,255,255,0.2)";
     registerBtn.style.backgroundColor = "#21264D";
@@ -33,50 +35,46 @@ registerBtn.addEventListener('click',()=>{
     document.querySelector(".col-1").style.borderRadius = "0 20% 30% 0";
 })
 
-loginForm.addEventListener('submit', (event) => {
-    event.preventDefault();  // Prevent form submission
+// the fonction to handle login:
+const loginhandeling = async (event) => {
+    event.preventDefault();
 
+    //getting the UserName And The PassWord from the inputs:
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    // Send login data using fetch API
-    fetch('../PHP/login.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username: username,
-            password: password
-        })
-    })
-    .then(response => response.text())
-    .then(text => {
-        console.log('Raw response:', text);  // Log raw response
-        return JSON.parse(text);  // Manually parse the JSON
-    })
-    .then(data => {
-        if (data.success) {
-            window.location.href = "../HTML/client.html";  // Redirect to client page
+    const data = {
+        username,
+        password,
+    };
+
+
+    try {
+        //calling the login.php file with the fetch:
+        const response = await fetch('../PHP/login.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            localStorage.setItem('username', result.username);
+            localStorage.setItem('name', result.name);
+            alert("login successful");
+
+            setTimeout(() => {
+                window.location.href = '../HTML/client.html';
+            }, 1500);
         } else {
-            usernameInput.style.border = "4px solid red";
-            passwordInput.style.border = "4px solid red";
-            alert(data.message);
+            showToast(result.error);
         }
-    })
-    .catch(error => {
+    } catch (error) {
         console.error('Error:', error);
-    });
-});
+        showToast('An error occurred. Please try again.');
+    }
+};
 
-// Remove red border when user starts typing in username field
-usernameInput.addEventListener('input', () => {
-    usernameInput.style.border = "";
-    passwordInput.style.border = "";
-});
-
-// Remove red border when user starts typing in password field
-passwordInput.addEventListener('input', () => {
-    usernameInput.style.border = "";
-    passwordInput.style.border = "";
-});

@@ -1,47 +1,55 @@
-<?php
-session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-require_once 'db.php';  // Include the db.php file
-
-// Allow CORS for testing purposes (remove in production)
-header('Access-Control-Allow-Origin: *');
+<?php 
+//Appel à la connection de la base de données:
+include('db.php');
+//Le Header de JSON:
 header('Content-Type: application/json');
+//Starting A Session:
+session_start();
 
-// Get data from the client
-$data = json_decode(file_get_contents("php://input"), true);
+//Post Request:
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo json_encode(['error' => 'Only POST requests are allowed']);
+    http_response_code(405);
+    exit();
+}
+
+//Getting The Data:
+$data = json_decode(file_get_contents('php://input'), true);
+
+if ($data === null) {
+    echo json_encode(['error' => 'Invalid JSON received']);
+    exit();
+}
+
+//Getting The UserName And The PassWord:
 $username = $data['username'];
 $password = $data['password'];
 
-// Query to check if the user exists
-$sql = "SELECT * FROM users WHERE username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+try {
+    //La Requete SQL Pour Récuperer De La Base De Données:
+    $query = $connection->prepare("SELECT username, password FROM users WHERE username = ?");
+    $query->execute([$username]);
+    $user = $query->fetch(PDO::FETCH_ASSOC);
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-
-    // Check if the password matches
-    if (password_verify($password, $user['password'])) {
-        // Start session and save the username in session
-        $_SESSION['username'] = $user['username'];  // Save the username in the session
-        
-        // Optional: Set a cookie for remembering the user (for a week)
-        setcookie('username', $user['username'], time() + (7 * 24 * 60 * 60), "/");  // Cookie lasts for a week
-        
-        echo json_encode(["success" => true]);
+    //Si L'Utilisateur Exist:
+    if ($user) {
+        //Verification du mot de passe:
+        if (password_verify($password, $user['password'])) {
+            $_SESSION['user'] = ['username' => $user['username']];
+            
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'username' => $user['username'],
+            ]);
+        } else {
+            echo json_encode(['error' => 'Invalid password']);
+        }
     } else {
-        echo json_encode(["success" => false, "message" => "Incorrect password."]);
+        echo json_encode(['error' => 'Invalid username']);
     }
-} else {
-    echo json_encode(["success" => false, "message" => "User does not exist."]);
+} catch (PDOException $e) {
+    echo json_encode(['error' => 'Database error', 'message' => $e->getMessage()]);
 }
-
-
-
-// Close connection
-$conn->close();
+exit();
 ?>
