@@ -398,9 +398,15 @@ nav{
     text-align: center;
     overflow: hidden;
     transition: 0.8s ease-in-out;
+    width: 0;
+    height: 0;
+}
+
+.product-card.active {
     width: 260px;
     height: 379px;
 }
+
 
 .product-cards-container .product-card:hover{
     transform: scale(1.1);
