@@ -14,6 +14,7 @@
     --color-primary-variant:#111e88;
     --color-dark-variant:#677483;
     --color-background:#f6f6f9;
+    --color-baby-blue: #e6f3ff;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
@@ -42,70 +43,80 @@ button{
 
 /******************NAVIGATION-BAR*******************/
 
-nav{
-    background-color: white;
+.navbar-outer-container {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    background-color: white;
     z-index: 1000;
-    transition: 0.3s ease-in-out;
+    padding: 10px 0;
 }
 
-#navbar{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    place-items: center;
+.navbar-container {
     width: 85%;
-    margin: auto;
-    padding: 12px;
-}
-
-#navbar-logo img{
-    width: 100px;
-    height: 100px;
-}
-
-#navbar-links {
+    margin: 0 auto;
     display: flex;
-    place-items: center;
-    flex-direction: row;
+    justify-content: center;
 }
 
-#navbar-links ul {
-     list-style: none;
-     display: flex;
-     flex-direction: row;
+.navbar {
+    background-color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-#navbar-links li {
-    margin-left: 60px;  
-}
-
-#navbar-links a{
-    text-decoration: none;
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
     color: rgb(64, 64, 64);
+    transition: 0.3s ease-in-out;
+    text-decoration: none;
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     font-size: 16px;
-    transition: 0.3s ease-in-out;
+    position: relative;
 }
 
-#navbar-links ul a:hover{
+.home-button {
+    background-color: var(--color-primary);
+    color: white !important;
+    padding: 8px 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.home-button:hover {
+    background-color: #c7d5f1;
+}
+
+.nav-item:not(.home-button):hover {
     color: rgb(65,105,255);
 }
 
-#navbar-tools {
-    display: flex;
-    flex-direction: row;
-    margin-left: 60px;
+.nav-item:not(.home-button).active {
+    color: rgb(65,105,255);
 }
 
-#navbar-tools a{
-    display: flex;
-    place-items: center;
+.nav-item svg {
+    width: 20px;
+    height: 20px;
 }
 
-#navbar-tools span{
+.nav-item span:not(.count-badge) {
+    font-size: 16px;
+}
+
+.count-badge {
     background-color: var(--color-danger);
     width: 17px;
     height: 17px;
@@ -114,16 +125,40 @@ nav{
     font-size: 13px;
     display: flex;
     justify-content: center;
-    place-items: center;
-    position: relative;
-    bottom: 8px;
-    right: 10px;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 8px;
 }
 
-#wishlist-link{
-    margin-left: 15px;
-}
+/* Making the navbar responsive */
+@media (max-width: 480px) {
+    .navbar-container {
+        width: 90%;
+    }
 
+    .navbar {
+        border-radius: 20px;
+        padding: 8px 12px;
+    }
+    
+    .nav-item {
+        padding: 6px 12px;
+    }
+    
+    .home-button {
+        padding: 6px 16px;
+    }
+    
+    .nav-item svg {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .nav-item span:not(.count-badge) {
+        font-size: 14px;
+    }
+}
 /******************PRODUCT-PAGE-MAIN-BODY*******************/
 
 #product-page-body{
