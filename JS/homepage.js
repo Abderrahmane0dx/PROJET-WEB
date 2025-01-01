@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Clear existing content
                     productContainer.innerHTML = "";
 
-                    // Add product cards for this section
                     filteredProducts.forEach(product => {
+                        const productId = product.id; // Assuming each product has a unique 'id'
                         const productCard = 
-                        `<li class="product-card">
+                        `<li class="product-card" id="product-${productId}">
                             <div class="product-image-container">
                                 <img src="${product.photo_url}" alt="${product.name}">
                                 <button class="heart-button">
@@ -110,20 +110,44 @@ function displayProductCards() {
 }
 
 function initializeWishlist() {
-    //****************ADDING-ITEMS-TO-THE-WISH-LIST****************//
-    let wishlistCount = document.querySelector('#wishlist-link span');
-    let heartbutton = document.querySelectorAll('.heart-button');
+    // Load wishlist from localStorage or initialize it
+    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     
-    heartbutton.forEach((button) => {
-      button.addEventListener('click', () => {
-        button.classList.toggle('active');
-        wishlistCount.innerHTML = document.querySelectorAll('.heart-button.active').length;
-      });
+    // Update wishlist count on page load
+    let wishlistCount = document.querySelector('#wishlist-link span');
+    wishlistCount.innerHTML = wishlist.length;
+
+    let heartButtons = document.querySelectorAll('.heart-button');
+
+    heartButtons.forEach((button) => {
+        const productCard = button.closest('.product-card');
+        const productId = productCard?.id.replace('product-', '');
+
+        // Set the button's state based on the saved wishlist
+        if (wishlist.includes(productId)) {
+            button.classList.add('active');
+        }
+
+        button.addEventListener('click', () => {
+            button.classList.toggle('active');
+
+            if (button.classList.contains('active')) {
+                if (!wishlist.includes(productId)) {
+                    wishlist.push(productId);
+                }
+            } else {
+                wishlist = wishlist.filter(id => id !== productId);
+            }
+
+            // Update the count and save to localStorage
+            wishlistCount.innerHTML = wishlist.length;
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+            // Debugging: Log the current wishlist
+            console.log('Current Wishlist:', wishlist);
+        });
     });
-  }
-
-
-
+}
 
 //SLIDSHOWPART:
 let slideshowButtons = document.querySelectorAll('.slideshow-buttons');

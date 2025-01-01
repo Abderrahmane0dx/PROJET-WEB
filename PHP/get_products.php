@@ -6,8 +6,8 @@ include('db.php');
 header('Content-Type: application/json');
 
 try {
-    // Query to get only the required fields (name, price, photo_url, device_type)
-    $query = $connection->prepare("SELECT name, price, photo_url, device_type FROM products");
+    // Query to get the required fields, including the id
+    $query = $connection->prepare("SELECT id, name, price, photo_url, device_type FROM products");
     $query->execute();
     $products = $query->fetchAll(PDO::FETCH_ASSOC);
 

@@ -67,7 +67,7 @@ const loginhandeling = async (event) => {
             alert("login successful");
 
             setTimeout(() => {
-                window.location.href = '../HTML/client.html';
+                window.location.href = '../HTML/HOMEPAGE.html';
             }, 1500);
         } else {
             showToast(result.error);
