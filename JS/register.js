@@ -49,7 +49,7 @@ const registerHandler = async (event) => {
             showToast("Registration successful");
 
             setTimeout(() => {
-                window.location.href = '../HTML/HOMEPAGE.html';
+                window.location.href = '../HTML/testhomepage.html';
             }, 1500);
         } else {
             showToast(result.error);

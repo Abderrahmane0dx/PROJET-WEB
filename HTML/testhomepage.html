@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLIENT</title>
+    <link rel="stylesheet" href="../CSS/client.css">
+</head>
+<body>
+    <nav class="navbar-outer-container">
+        <div class="navbar-container">
+            <div class="navbar">
+                <a href="home.html" class="nav-item home-button active">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="../HTML/CART.html" class="nav-item" id="wishlist-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                    </svg>
+                    <span class="count-badge">0</span>
+                </a>
+                <a href="cart.html" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                        <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                    </svg>
+                    <span class="count-badge">0</span>
+                </a>
+                <a href="profile.html" class="nav-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+<!-----------------------------Main----------------------------->
+    <div id="product-page-body">
+        <!-----------------------------TOP-SECTION----------------------------->
+        <div id="product-top-container">
+            <div id="product-top-wrapper">
+                <div id="product-top-text-section">
+                    <h1>Latest Trending</h1>
+                    <h2>Beats Pro</h2>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    </p>
+                    <button class="blue-button">
+                        Shop Now
+                    </button>
+                </div>
+                <div id="product-top-image-section">
+                    <img src="../PROJECT-PHOTOS/RANDOM/beats.jpg" alt="Beats HeadPhones">
+                </div>
+            </div>
+        </div>
+        <!-----------------------------PRODUCT-CATEGORIES----------------------------->
+        <div id="product-category-container">
+            <div id="product-category-text">
+                <span class="blue-line"></span>
+                <span class="section-category-text">Categories</span>
+            </div>
+            <div id="product-category-wrapper">
+                <!-----------------------------ALL-CATEGORIES----------------------------->
+                <a href="#product-section-all">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/RANDOM/all.jpg" alt="All Categories">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                All
+                            </span>
+                            <span class="product-category-number">
+                                50 items
+                            </span>
+                        </div>
+                    </div>
+               </a>
+                <!-----------------------------HEADPHONES----------------------------->
+                <a href="#Head-Phones-section">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/HEADPHONES/02.png" alt="HaedPhones">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                HeadPhones
+                            </span>
+                            <span class="product-category-number">
+                                10 items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                <!-----------------------------SMARTWATCH----------------------------->
+                <a href="#smartwatch-section">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/SMARTWATCHES/06 (3).png" alt="SmartWatch">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                SmartWatch
+                            </span>
+                            <span class="product-category-number">
+                                10 items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                <!-----------------------------LAPTOP----------------------------->
+                <a href="#LAPTOPS-section">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/LAPTOPS/01 (1).png" alt="LapTop">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                LapTops
+                            </span>
+                            <span class="product-category-number">
+                                10 items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                <!-----------------------------TABLETTE----------------------------->
+                <a href="#Tablet-section">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/TABLETTES/06 (4).png" alt="Tablette">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                Tablettes
+                            </span>
+                            <span class="product-category-number">
+                                10 items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                <!-----------------------------PHONE----------------------------->
+                <a href="#Phones-section">
+                    <div class="product-category">
+                        <div class="product-category-image-section">
+                            <img src="../PROJECT-PHOTOS/PHONES/03 (2).png" alt="Phone">
+                        </div>
+                        <div class="product-category-desc-section">
+                            <span class="product-category-type">
+                                Phones
+                            </span>
+                            <span class="product-category-number">
+                                10 items
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-----------------------------END-OF-PRODUCT-CATEGORIES----------------------------->
+        <!-----------------------------PRODUCT-CARDS-SLIDESHOW----------------------------->
+        <div class="product-section" id="product-section-all">
+             <div class="product-section-top-container">
+                  <div class="section-category-container">
+                      <div class="section-category-type">
+                         <span class="blue-line"></span>
+                         <span class="section-category-text">All Electronics</span>
+                      </div>
+                      <h1>Explore Best Sellers</h1>
+                  </div>
+                  <div class="slideshow-buttons-container" data-slideshow="all">
+                       <button class="slideshow-buttons prev-button">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                             <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                          </svg>
+                       </button>
+                       <button class="slideshow-buttons next-button">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                             <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                          </svg>
+                       </button>
+                  </div>
+             </div>
+             <div class="product-cards-container">
+                <ul>
+                    <li class="product-card">
+                        <div class="product-image-container">
+                            <img src="../PROJECT-PHOTOS/HEADPHONES/01.png" alt="Navy-HeadPhones">
+                            <button class="heart-button">
+                                <svg viewBox="0 0 24 24" width="22px" height="22px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                        </div>
+                        <div class="product-text-container">
+                            <h1>Navy Headphones</h1>
+                            <p>$87.99</p>
+                            <button class="blue-button">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </li>
+                    <li class="product-card">
+                        <div class="product-image-container">
+                            <img src="../PROJECT-PHOTOS/LAPTOPS/03 (1).png" alt="Mac Air">
+                            <button class="heart-button">
+                                <svg viewBox="0 0 24 24" width="22px" height="22px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                        </div>
+                        <div class="product-text-container">
+                            <h1>IMac Air</h1>
+                            <p>$249.99</p>
+                            <button class="blue-button">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </li>
+                    <li class="product-card">
+                        <div class="product-image-container">
+                            <img src="../PROJECT-PHOTOS/PHONES/04 (2).png" alt="Iphone">
+                            <button class="heart-button">
+                                <svg viewBox="0 0 24 24" width="22px" height="22px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                        </div>
+                        <div class="product-text-container">
+                            <h1>Iphone 12 Pro Max White</h1>
+                            <p>$149.99</p>
+                            <button class="blue-button">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </li>
+                    <li class="product-card">
+                        <div class="product-image-container">
+                            <img src="../PROJECT-PHOTOS/SMARTWATCHES/02 (3).png" alt="Smart Watch">
+                            <button class="heart-button">
+                                <svg viewBox="0 0 24 24" width="22px" height="22px" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                            </button>
+                        </div>
+                        <div class="product-text-container">
+                            <h1>Blue Smart Watch</h1>
+                            <p>$187.99</p>
+                            <button class="blue-button">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+             </div>
+        </div>
+        <!-----------------------------HEADPHONES-SLIDESHOW----------------------------->
+        <div class="product-section" id="product-section-Headphones">
+            <div class="product-section-top-container">
+                 <div class="section-category-container">
+                     <div class="section-category-type">
+                        <span class="blue-line"></span>
+                        <span class="section-category-text">HeadPhones</span>
+                     </div>
+                     <h1>Discover Our HeadPhones</h1>
+                 </div>
+                 <div class="slideshow-buttons-container" data-slideshow="Headphones">
+                      <button class="slideshow-buttons prev-button">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                         </svg>
+                      </button>
+                      <button class="slideshow-buttons next-button">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                         </svg>
+                      </button>
+                 </div>
+            </div>
+            <div class="product-cards-container" id="headphonecard">
+               <ul>
+               </ul>
+            </div>
+        </div>
+        <!-----------------------------PHONES-SLIDESHOW----------------------------->
+            <div class="product-section" id="product-section-Phones">
+                <div class="product-section-top-container">
+                     <div class="section-category-container">
+                         <div class="section-category-type">
+                            <span class="blue-line"></span>
+                            <span class="section-category-text">Phones</span>
+                         </div>
+                         <h1>Discover Our Phones</h1>
+                     </div>
+                     <div class="slideshow-buttons-container" data-slideshow="Phones">
+                          <button class="slideshow-buttons prev-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                             </svg>
+                          </button>
+                          <button class="slideshow-buttons next-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                             </svg>
+                          </button>
+                     </div>
+                </div>
+                <div class="product-cards-container" id="phonecard">
+                   <ul>
+                   </ul>
+                </div>
+            </div>
+            <!-----------------------------TABLETS-SLIDESHOW----------------------------->
+            <div class="product-section" id="product-section-Tablets">
+                <div class="product-section-top-container">
+                     <div class="section-category-container">
+                         <div class="section-category-type">
+                            <span class="blue-line"></span>
+                            <span class="section-category-text">Tablets</span>
+                         </div>
+                         <h1>Discover Our Tablets</h1>
+                     </div>
+                     <div class="slideshow-buttons-container" data-slideshow="Tablets">
+                          <button class="slideshow-buttons prev-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                             </svg>
+                          </button>
+                          <button class="slideshow-buttons next-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                             </svg>
+                          </button>
+                     </div>
+                </div>
+                <div class="product-cards-container" id="tabletcard">
+                   <ul>
+                   </ul>
+                </div>
+            </div>
+            <!-----------------------------SMARTWATCHES-SLIDESHOW----------------------------->
+            <div class="product-section" id="product-section-SmartWatch">
+                <div class="product-section-top-container">
+                     <div class="section-category-container">
+                         <div class="section-category-type">
+                            <span class="blue-line"></span>
+                            <span class="section-category-text">Smart Watch</span>
+                         </div>
+                         <h1>Discover Our SmartWatches</h1>
+                     </div>
+                     <div class="slideshow-buttons-container" data-slideshow="SmartWatch">
+                          <button class="slideshow-buttons prev-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                             </svg>
+                          </button>
+                          <button class="slideshow-buttons next-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                             </svg>
+                          </button>
+                     </div>
+                </div>
+                <div class="product-cards-container" id="smartwatchcard">
+                   <ul>
+                   </ul>
+                </div>
+            </div>
+            <!-----------------------------LAPTOPS-SLIDESHOW----------------------------->
+            <div class="product-section" id="product-section-Laptop">
+                <div class="product-section-top-container">
+                     <div class="section-category-container">
+                         <div class="section-category-type">
+                            <span class="blue-line"></span>
+                            <span class="section-category-text">LapTop</span>
+                         </div>
+                         <h1>Discover Our LapTops</h1>
+                     </div>
+                     <div class="slideshow-buttons-container" data-slideshow="Laptop">
+                          <button class="slideshow-buttons prev-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                             </svg>
+                          </button>
+                          <button class="slideshow-buttons next-button">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+                             </svg>
+                          </button>
+                     </div>
+                </div>
+                <div class="product-cards-container" id="laptopcard">
+                   <ul>
+                   </ul>
+                </div>
+            </div>
+    </div>
+    <script src="../JS/testhomepage.js"></script>
+</body>
+</html>

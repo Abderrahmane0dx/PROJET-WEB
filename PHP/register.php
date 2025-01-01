@@ -36,32 +36,29 @@ try {
         exit();
     }
 
-    // Check if the password already exists
-    $passwordQuery = $connection->prepare("SELECT password FROM users");
-    $passwordQuery->execute();
-    $allPasswords = $passwordQuery->fetchAll(PDO::FETCH_COLUMN);
-
-    foreach ($allPasswords as $hashedPassword) {
-        if (password_verify($password, $hashedPassword)) {
-            echo json_encode(['error' => 'Please choose a more secure password.']);
-            exit();
-        }
-    }
-
-    // Insert the new user
+    // Insert the new user into the `users` table
     $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $insertQuery = $connection->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
     $insertQuery->execute([$username, $hashedPassword, $email]);
 
+    // Get the user ID of the newly inserted user (to use for the wishlist)
+    $userId = $connection->lastInsertId();
+
+    // Insert an empty wishlist for the user into the `user_wishlists` table
+    $wishlistQuery = $connection->prepare("INSERT INTO user_wishlists (username, wishlist) VALUES (?, ?)");
+    $wishlistQuery->execute([$username, json_encode([])]); // Empty wishlist
+
     // Start a session for the new user
     $_SESSION['user'] = ['username' => $username];
 
+    // Respond with success
     echo json_encode([
         'status' => 'success',
         'message' => 'Registration successful',
         'username' => $username,
     ]);
 } catch (PDOException $e) {
+    // Handle database error
     echo json_encode(['error' => 'Database error', 'message' => $e->getMessage()]);
 }
 exit();
