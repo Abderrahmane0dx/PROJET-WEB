@@ -110,13 +110,59 @@ function displayProductCards() {
 }
 
 function initializeWishlist() {
-    // Load wishlist from localStorage or initialize it
-    let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    // Get the logged-in username
+    const username = localStorage.getItem('username');
     
-    // Update wishlist count on page load
-    let wishlistCount = document.querySelector('#wishlist-link span');
-    wishlistCount.innerHTML = wishlist.length;
+    // If the user is logged in, fetch the wishlist from the server
+    if (username) {
+        // Fetch wishlist from server if the user is logged in
+        fetchWishlistFromServer(username);
+    } else {
+        // If no username is found, load the wishlist from localStorage (for guest users)
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        updateWishlistCount(wishlist.length);
+        setWishlistButtonsState(wishlist);
+    }
 
+    let heartButtons = document.querySelectorAll('.heart-button');
+
+    heartButtons.forEach((button) => {
+        const productCard = button.closest('.product-card');
+        const productId = productCard?.id.replace('product-', '');
+
+        // Set the button's state based on the current wishlist
+        button.addEventListener('click', () => {
+            button.classList.toggle('active');
+
+            let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            if (button.classList.contains('active')) {
+                if (!wishlist.includes(productId)) {
+                    wishlist.push(productId);
+                }
+            } else {
+                wishlist = wishlist.filter(id => id !== productId);
+            }
+
+            // Update the count and save to localStorage
+            updateWishlistCount(wishlist.length);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+
+            // If the user is logged in, update the wishlist on the server
+            if (username) {
+                updateWishlistOnServer(wishlist);
+            }
+        });
+    });
+}
+
+// Function to update the wishlist count
+function updateWishlistCount(count) {
+    const wishlistCount = document.querySelector('#wishlist-link span');
+    wishlistCount.innerHTML = count;
+}
+
+// Function to update the wishlist buttons based on the current wishlist
+function setWishlistButtonsState(wishlist) {
     let heartButtons = document.querySelectorAll('.heart-button');
 
     heartButtons.forEach((button) => {
@@ -127,27 +173,65 @@ function initializeWishlist() {
         if (wishlist.includes(productId)) {
             button.classList.add('active');
         }
-
-        button.addEventListener('click', () => {
-            button.classList.toggle('active');
-
-            if (button.classList.contains('active')) {
-                if (!wishlist.includes(productId)) {
-                    wishlist.push(productId);
-                }
-            } else {
-                wishlist = wishlist.filter(id => id !== productId);
-            }
-
-            // Update the count and save to localStorage
-            wishlistCount.innerHTML = wishlist.length;
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-
-            // Debugging: Log the current wishlist
-            console.log('Current Wishlist:', wishlist);
-        });
     });
 }
+
+// Function to fetch the wishlist from the server for logged-in users
+async function fetchWishlistFromServer(username) {
+    try {
+        const response = await fetch('../PHP/get_wishlist.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+            const wishlist = result.wishlist || [];
+            updateWishlistCount(wishlist.length);
+            setWishlistButtonsState(wishlist);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist)); // Store in localStorage for client-side updates
+        } else {
+            console.error('Error fetching wishlist:', result.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Function to send the updated wishlist to the backend
+async function updateWishlistOnServer(wishlist) {
+    const username = localStorage.getItem('username');  // Get the logged-in username
+
+    // If no username is found, return (e.g., user is not logged in)
+    if (!username) return;
+
+    try {
+        const response = await fetch('../PHP/update_wishlist.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                wishlist,
+            }),
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+            console.log('Wishlist updated on server.');
+        } else {
+            console.error('Error updating wishlist:', result.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+
 
 //SLIDSHOWPART:
 let slideshowButtons = document.querySelectorAll('.slideshow-buttons');
@@ -198,3 +282,5 @@ slideshowButtons.forEach((button) => {
     }
    })
 })
+
+

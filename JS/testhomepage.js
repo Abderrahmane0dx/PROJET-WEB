@@ -53,15 +53,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <div class="product-text-container">
                                 <h1>${product.name}</h1>
                                 <p>$${product.price}</p>
-                                <button class="blue-button">Add To Cart</button>
+                                <button class="blue-button add-to-cart-button">Add To Cart</button>
                             </div>
                         </li>`;
                         productContainer.insertAdjacentHTML("beforeend", productCard);
                         displayProductCards();
-                        
                     });
                 });
+
                 initializeWishlist();
+                initializeCart();
             } else {
                 console.error("Error fetching products:", result.message);
             }
@@ -71,11 +72,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (error) {
         console.error("Error:", error);
     }
-
-    
 });
 
-//****************VARIABALES****************//
+//****************VARIABLES****************//
 let productContainerWidth = document.querySelector('.product-cards-container').offsetWidth;
 let productCardWidth = 260;
 let productCardsPerRow = Math.floor(productContainerWidth / (productCardWidth + 10));
@@ -85,7 +84,6 @@ let productCards;
 let productSections = document.querySelectorAll('.product-section');
 
 function displayProductCards() {
-    //****************VARIABLES****************//
     const productContainerWidth = document.querySelector('.product-cards-container').offsetWidth;
     const productCardWidth = 260;
     const productCardsPerRow = Math.floor(productContainerWidth / (productCardWidth + 10));
@@ -93,11 +91,10 @@ function displayProductCards() {
     const lastElement = productCardsPerRow - 1;
     const productSections = document.querySelectorAll('.product-section');
 
-    //****************PRODUCT-CARDS-DISPLAY****************//
     productSections.forEach((section) => {
         const productCards = section.querySelectorAll('.product-card');
         for (let i = 0; i < productCardsPerRow; i++) {
-            if (productCards[i]) { // Check to ensure the index exists
+            if (productCards[i]) {
                 productCards[i].classList.add('active');
                 if (i === lastElement) {
                     productCards[i].style.marginRight = '0px';
@@ -110,15 +107,11 @@ function displayProductCards() {
 }
 
 function initializeWishlist() {
-    // Get the logged-in username
     const username = localStorage.getItem('username');
-    
-    // If the user is logged in, fetch the wishlist from the server
+
     if (username) {
-        // Fetch wishlist from server if the user is logged in
         fetchWishlistFromServer(username);
     } else {
-        // If no username is found, load the wishlist from localStorage (for guest users)
         let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
         updateWishlistCount(wishlist.length);
         setWishlistButtonsState(wishlist);
@@ -130,7 +123,6 @@ function initializeWishlist() {
         const productCard = button.closest('.product-card');
         const productId = productCard?.id.replace('product-', '');
 
-        // Set the button's state based on the current wishlist
         button.addEventListener('click', () => {
             button.classList.toggle('active');
 
@@ -143,11 +135,9 @@ function initializeWishlist() {
                 wishlist = wishlist.filter(id => id !== productId);
             }
 
-            // Update the count and save to localStorage
             updateWishlistCount(wishlist.length);
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
 
-            // If the user is logged in, update the wishlist on the server
             if (username) {
                 updateWishlistOnServer(wishlist);
             }
@@ -155,13 +145,11 @@ function initializeWishlist() {
     });
 }
 
-// Function to update the wishlist count
 function updateWishlistCount(count) {
     const wishlistCount = document.querySelector('#wishlist-link span');
     wishlistCount.innerHTML = count;
 }
 
-// Function to update the wishlist buttons based on the current wishlist
 function setWishlistButtonsState(wishlist) {
     let heartButtons = document.querySelectorAll('.heart-button');
 
@@ -169,14 +157,12 @@ function setWishlistButtonsState(wishlist) {
         const productCard = button.closest('.product-card');
         const productId = productCard?.id.replace('product-', '');
 
-        // Set the button's state based on the saved wishlist
         if (wishlist.includes(productId)) {
             button.classList.add('active');
         }
     });
 }
 
-// Function to fetch the wishlist from the server for logged-in users
 async function fetchWishlistFromServer(username) {
     try {
         const response = await fetch('../PHP/get_wishlist.php', {
@@ -192,7 +178,7 @@ async function fetchWishlistFromServer(username) {
             const wishlist = result.wishlist || [];
             updateWishlistCount(wishlist.length);
             setWishlistButtonsState(wishlist);
-            localStorage.setItem('wishlist', JSON.stringify(wishlist)); // Store in localStorage for client-side updates
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
         } else {
             console.error('Error fetching wishlist:', result.error);
         }
@@ -282,3 +268,123 @@ slideshowButtons.forEach((button) => {
     }
    })
 })
+
+
+// Add these functions to your existing JavaScript file
+
+function initializeCart() {
+    const username = localStorage.getItem('username');
+    
+    if (username) {
+        // Fetch cart from server if user is logged in
+        fetchCartFromServer(username);
+    } else {
+        // For guest users, load cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount(cart.length);
+    }
+
+    // Add click event listeners to all "Add To Cart" buttons
+    let cartButtons = document.querySelectorAll('.blue-button');
+    cartButtons.forEach((button) => {
+        const productCard = button.closest('.product-card');
+        const productId = productCard?.id.replace('product-', '');
+
+        button.addEventListener('click', () => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (!cart.includes(productId)) {
+                cart.push(productId);
+                button.textContent = 'Remove from Cart';
+                button.classList.add('in-cart');
+            } else {
+                cart = cart.filter(id => id !== productId);
+                button.textContent = 'Add To Cart';
+                button.classList.remove('in-cart');
+            }
+
+            // Update cart count and save to localStorage
+            updateCartCount(cart.length);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // If user is logged in, update cart on server
+            if (username) {
+                updateCartOnServer(cart);
+            }
+        });
+    });
+}
+
+function updateCartCount(count) {
+    const cartCount = document.querySelector('#cart-link span');
+    cartCount.innerHTML = count;
+}
+
+function setCartButtonsState(cart) {
+    let cartButtons = document.querySelectorAll('.blue-button');
+    
+    cartButtons.forEach((button) => {
+        const productCard = button.closest('.product-card');
+        const productId = productCard?.id.replace('product-', '');
+
+        if (cart.includes(productId)) {
+            button.textContent = 'Remove from Cart';
+            button.classList.add('in-cart');
+        } else {
+            button.textContent = 'Add To Cart';
+            button.classList.remove('in-cart');
+        }
+    });
+}
+
+async function fetchCartFromServer(username) {
+    try {
+        const response = await fetch('../PHP/get_cart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+            const cart = result.product_ids || [];
+            updateCartCount(cart.length);
+            setCartButtonsState(cart);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        } else {
+            console.error('Error fetching cart:', result.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+async function updateCartOnServer(cart) {
+    const username = localStorage.getItem('username');
+    
+    if (!username) return;
+
+    try {
+        const response = await fetch('../PHP/update_cart.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                product_ids: cart,
+            }),
+        });
+
+        const result = await response.json();
+        if (result.status === 'success') {
+            console.log('Cart updated on server.');
+        } else {
+            console.error('Error updating cart:', result.error);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}

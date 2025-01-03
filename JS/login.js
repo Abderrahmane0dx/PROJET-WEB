@@ -48,7 +48,6 @@ const loginhandeling = async (event) => {
         password,
     };
 
-
     try {
         //calling the login.php file with the fetch:
         const response = await fetch('../PHP/login.php', {
@@ -64,10 +63,28 @@ const loginhandeling = async (event) => {
         if (result.status === 'success') {
             localStorage.setItem('username', result.username);
             localStorage.setItem('name', result.name);
-            alert("login successful");
+            alert("Login successful");
+
+            // Fetch the wishlist after login
+            const wishlistResponse = await fetch('../PHP/get_wishlist.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: result.username })
+            });
+
+            const wishlistResult = await wishlistResponse.json();
+            if (wishlistResult.status === 'success') {
+                // Save the wishlist to localStorage
+                localStorage.setItem('wishlist', JSON.stringify(wishlistResult.wishlist));
+            } else {
+                // Initialize an empty wishlist if none found
+                localStorage.setItem('wishlist', JSON.stringify([]));
+            }
 
             setTimeout(() => {
-                window.location.href = '../HTML/HOMEPAGE.html';
+                window.location.href = '../HTML/testhomepage.html';
             }, 1500);
         } else {
             showToast(result.error);
@@ -77,4 +94,3 @@ const loginhandeling = async (event) => {
         showToast('An error occurred. Please try again.');
     }
 };
-

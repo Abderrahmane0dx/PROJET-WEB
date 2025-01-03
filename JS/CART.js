@@ -1,5 +1,6 @@
+// Global variables
 let cart = {};
-let wishlistProducts = []; // Global variable for wishlist products
+let wishlistProducts = [];
 
 async function displayProducts() {
     const productList = document.getElementById("product-list");
@@ -7,7 +8,6 @@ async function displayProducts() {
 
     try {
         if (wishlistProducts.length === 0) {
-            // Fetch all products and filter for the wishlist only once
             const response = await fetch("../PHP/get_products.php", {
                 method: "GET",
                 headers: {
@@ -30,8 +30,6 @@ async function displayProducts() {
                 return;
             }
         }
-
-        // Call the filterProducts function to handle display based on search input
         filterProducts();
     } catch (error) {
         console.error("Error:", error);
@@ -40,15 +38,12 @@ async function displayProducts() {
 
 function filterProducts() {
     const searchValue = document.getElementById("search").value.toLowerCase();
-
-    // Filter the wishlist products based on the search input
     const filteredWishlist = wishlistProducts.filter(product =>
         product.name.toLowerCase().includes(searchValue)
     );
 
-    // Display the filtered products
     const productList = document.getElementById("product-list");
-    productList.innerHTML = ""; // Clear existing content
+    productList.innerHTML = "";
 
     if (filteredWishlist.length === 0) {
         productList.innerHTML = "<p>No products match your search.</p>";
@@ -58,17 +53,89 @@ function filterProducts() {
     filteredWishlist.forEach(product => {
         const productEl = document.createElement("div");
         productEl.className = "product";
-
+        productEl.id = `product-${product.id}`; // Add consistent product ID
+        
         productEl.innerHTML = `
-            <img src="${product.photo_url}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.device_type}</p>
-            <p>${product.price} €</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>`;
+            <div class="product-image-container">
+                <img src="${product.photo_url}" alt="${product.name}">
+            </div>
+            <div class="product-text-container">
+                <h3>${product.name}</h3>
+                <p>${product.device_type}</p>
+                <p>${product.price} €</p>
+                <button class="blue-button add-to-cart-button" onclick="addToCart(${product.id})">
+                    Add to Cart
+                </button>
+            </div>`;
         
         productList.appendChild(productEl);
     });
 }
+
+async function populateCart() {
+    const username = localStorage.getItem('username'); // Get the logged-in user's username
+    if (!username) {
+        console.error("Username not found in localStorage");
+        return;
+    }
+
+    try {
+        // Fetch the cart data from the backend
+        const response = await fetch("../PHP/get_cart.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username }),
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            if (result.status === "success") {
+                const productIds = result.product_ids || [];
+                
+                // Fetch all products details for the cart
+                const allProductsResponse = await fetch("../PHP/get_products.php", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if (allProductsResponse.ok) {
+                    const productsResult = await allProductsResponse.json();
+                    if (productsResult.status === "success") {
+                        const allProducts = productsResult.products;
+                        
+                        // Populate the cart with the products matching the product IDs from the cart table
+                        productIds.forEach(productId => {
+                            const product = allProducts.find(p => p.id.toString() === productId);
+                            if (product) {
+                                if (cart[productId]) {
+                                    cart[productId].quantity += 1;
+                                } else {
+                                    cart[productId] = { ...product, quantity: 1 };
+                                }
+                            }
+                        });
+                        updateCart();
+                    } else {
+                        console.error("Error fetching all products:", productsResult.message);
+                    }
+                } else {
+                    console.error("Failed to fetch products:", allProductsResponse.statusText);
+                }
+            } else {
+                console.error("Error fetching cart data:", result.message);
+            }
+        } else {
+            console.error("Request failed:", response.statusText);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
+
 
 
 function addToCart(productId) {
@@ -127,11 +194,16 @@ function confirmPurchase() {
     cart = {};  // Réinitialiser le panier
     updateCart();
     displayProducts();
-  }
+}
 
-document.addEventListener("DOMContentLoaded", displayProducts);
+document.addEventListener("DOMContentLoaded", async () => {
+    await displayProducts();
+    await populateCart();
+});
 
 
+
+// Sidebar toggle
 const toggleButton = document.getElementById('toggle-btn');
 const sidebar = document.getElementById('sidebar');
 
