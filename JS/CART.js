@@ -1,36 +1,32 @@
-// Global variables
 let cart = {};
 let wishlistProducts = [];
 
 async function displayProducts() {
     const productList = document.getElementById("product-list");
-    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
 
     try {
-        if (wishlistProducts.length === 0) {
-            const response = await fetch("../PHP/get_products.php", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+        // Fetch all products from the database
+        const response = await fetch("../PHP/get_products.php", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
 
-            if (response.ok) {
-                const result = await response.json();
-                if (result.status === "success") {
-                    wishlistProducts = result.products.filter(product =>
-                        wishlist.includes(product.id.toString())
-                    );
-                } else {
-                    console.error("Error fetching products:", result.message);
-                    return;
-                }
+        if (response.ok) {
+            const result = await response.json();
+
+            if (result.status === "success") {
+                wishlistProducts = result.products; // Load all products into wishlistProducts
+                filterProducts(); // Display products
             } else {
-                console.error("Request failed:", response.statusText);
+                console.error("Error fetching products:", result.message);
                 return;
             }
+        } else {
+            console.error("Request failed:", response.statusText);
+            return;
         }
-        filterProducts();
     } catch (error) {
         console.error("Error:", error);
     }
@@ -73,7 +69,7 @@ function filterProducts() {
 }
 
 async function populateCart() {
-    const username = localStorage.getItem('username'); // Get the logged-in user's username
+    const username = localStorage.getItem('username');
     if (!username) {
         console.error("Username not found in localStorage");
         return;
@@ -92,7 +88,7 @@ async function populateCart() {
         if (response.ok) {
             const result = await response.json();
             if (result.status === "success") {
-                const productIds = result.product_ids || [];
+                const productData = result.product_ids || {};
                 
                 // Fetch all products details for the cart
                 const allProductsResponse = await fetch("../PHP/get_products.php", {
@@ -107,17 +103,15 @@ async function populateCart() {
                     if (productsResult.status === "success") {
                         const allProducts = productsResult.products;
                         
-                        // Populate the cart with the products matching the product IDs from the cart table
-                        productIds.forEach(productId => {
+                        // Populate the cart with the products matching the product IDs and their quantities
+                        for (const [productId, quantity] of Object.entries(productData)) {
                             const product = allProducts.find(p => p.id.toString() === productId);
                             if (product) {
-                                if (cart[productId]) {
-                                    cart[productId].quantity += 1;
-                                } else {
-                                    cart[productId] = { ...product, quantity: 1 };
-                                }
+                                cart[productId] = { ...product, quantity };
+                                // Mark the product as added to the cart
+                                updateProductUI(productId);
                             }
-                        });
+                        }
                         updateCart();
                     } else {
                         console.error("Error fetching all products:", productsResult.message);
@@ -136,9 +130,37 @@ async function populateCart() {
     }
 }
 
+async function updateCartDatabase(username, cartData) {
+    try {
+        const response = await fetch("../PHP/update_cart.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                username: username,
+                product_ids: cartData,
+            }),
+        });
 
+        const result = await response.json();
+        if (result.status === "success") {
+            console.log("Cart updated in the database successfully.");
+        } else {
+            console.error("Error updating cart in the database:", result.error);
+        }
+    } catch (error) {
+        console.error("Error updating cart in the database:", error);
+    }
+}
 
-function addToCart(productId) {
+async function addToCart(productId) {
+    const username = localStorage.getItem('username');
+    if (!username) {
+        console.error("Username not found in localStorage");
+        return;
+    }
+
     // Search for the product in wishlistProducts instead of allProducts
     const product = wishlistProducts.find(p => p.id === productId);
     if (!product) {
@@ -146,15 +168,64 @@ function addToCart(productId) {
         return;
     }
 
-    // Add to cart or increment quantity
+    // If product is already in the cart, increase its quantity, otherwise, add it to cart
     if (cart[productId]) {
         cart[productId].quantity += 1;
     } else {
         cart[productId] = { ...product, quantity: 1 };
     }
+
+    // Update the cart in the database
+    const cartData = Object.fromEntries(Object.entries(cart).map(([id, product]) => [id, product.quantity]));
+    await updateCartDatabase(username, cartData);
+
+    // Update the UI for the product
+    updateProductUI(productId);
     updateCart();
 }
 
+async function removeFromCart(productId) {
+    const username = localStorage.getItem('username');
+    if (!username) {
+        console.error("Username not found in localStorage");
+        return;
+    }
+
+    if (cart[productId]) {
+        cart[productId].quantity -= 1;
+        if (cart[productId].quantity <= 0) {
+            delete cart[productId];
+        }
+    }
+
+    // Update the cart in the database
+    const cartData = Object.fromEntries(Object.entries(cart).map(([id, product]) => [id, product.quantity]));
+    await updateCartDatabase(username, cartData);
+
+    // Update the UI for the product
+    updateProductUI(productId);
+    updateCart();
+}
+
+function updateProductUI(productId) {
+    const productElement = document.getElementById(`product-${productId}`);
+    const isProductInCart = cart.hasOwnProperty(productId);
+
+    // If the product is in the cart, add the "Added to Cart" badge, else remove it
+    const badge = productElement.querySelector(".added-to-cart");
+    if (isProductInCart) {
+        if (!badge) {
+            const badgeElement = document.createElement("span");
+            badgeElement.className = "added-to-cart";
+            badgeElement.textContent = "Already Added";
+            productElement.querySelector(".product-image-container").appendChild(badgeElement);
+        }
+    } else {
+        if (badge) {
+            badge.remove();
+        }
+    }
+}
 
 function updateCart() {
     const cartItems = document.getElementById("cart-items");
@@ -176,15 +247,6 @@ function updateCart() {
     cartTotal.textContent = total + " €";
 }
 
-function removeFromCart(productId) {
-    if (cart[productId]) {
-        cart[productId].quantity -= 1;
-        if (cart[productId].quantity <= 0) delete cart[productId];
-    }
-    updateCart();
-}
-
-// Confirmation de l'achat
 function confirmPurchase() {
     if (Object.keys(cart).length === 0) {
       alert("Votre panier est vide !");
@@ -200,8 +262,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     await displayProducts();
     await populateCart();
 });
-
-
 
 // Sidebar toggle
 const toggleButton = document.getElementById('toggle-btn');

@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <div class="product-text-container">
                                 <h1>${product.name}</h1>
                                 <p>$${product.price}</p>
-                                <button class="blue-button add-to-cart-button">Add To Cart</button>
+                                <p id="description">${product.description}</p>
                             </div>
                         </li>`;
                         productContainer.insertAdjacentHTML("beforeend", productCard);
@@ -73,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error("Error:", error);
     }
 });
+
 
 //****************VARIABLES****************//
 let productContainerWidth = document.querySelector('.product-cards-container').offsetWidth;
@@ -218,7 +219,6 @@ async function updateWishlistOnServer(wishlist) {
 }
 
 
-
 //SLIDSHOWPART:
 let slideshowButtons = document.querySelectorAll('.slideshow-buttons');
 slideshowButtons.forEach((button) => {
@@ -268,123 +268,3 @@ slideshowButtons.forEach((button) => {
     }
    })
 })
-
-
-// Add these functions to your existing JavaScript file
-
-function initializeCart() {
-    const username = localStorage.getItem('username');
-    
-    if (username) {
-        // Fetch cart from server if user is logged in
-        fetchCartFromServer(username);
-    } else {
-        // For guest users, load cart from localStorage
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        updateCartCount(cart.length);
-    }
-
-    // Add click event listeners to all "Add To Cart" buttons
-    let cartButtons = document.querySelectorAll('.blue-button');
-    cartButtons.forEach((button) => {
-        const productCard = button.closest('.product-card');
-        const productId = productCard?.id.replace('product-', '');
-
-        button.addEventListener('click', () => {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            if (!cart.includes(productId)) {
-                cart.push(productId);
-                button.textContent = 'Remove from Cart';
-                button.classList.add('in-cart');
-            } else {
-                cart = cart.filter(id => id !== productId);
-                button.textContent = 'Add To Cart';
-                button.classList.remove('in-cart');
-            }
-
-            // Update cart count and save to localStorage
-            updateCartCount(cart.length);
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // If user is logged in, update cart on server
-            if (username) {
-                updateCartOnServer(cart);
-            }
-        });
-    });
-}
-
-function updateCartCount(count) {
-    const cartCount = document.querySelector('#cart-link span');
-    cartCount.innerHTML = count;
-}
-
-function setCartButtonsState(cart) {
-    let cartButtons = document.querySelectorAll('.blue-button');
-    
-    cartButtons.forEach((button) => {
-        const productCard = button.closest('.product-card');
-        const productId = productCard?.id.replace('product-', '');
-
-        if (cart.includes(productId)) {
-            button.textContent = 'Remove from Cart';
-            button.classList.add('in-cart');
-        } else {
-            button.textContent = 'Add To Cart';
-            button.classList.remove('in-cart');
-        }
-    });
-}
-
-async function fetchCartFromServer(username) {
-    try {
-        const response = await fetch('../PHP/get_cart.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username }),
-        });
-
-        const result = await response.json();
-        if (result.status === 'success') {
-            const cart = result.product_ids || [];
-            updateCartCount(cart.length);
-            setCartButtonsState(cart);
-            localStorage.setItem('cart', JSON.stringify(cart));
-        } else {
-            console.error('Error fetching cart:', result.error);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-
-async function updateCartOnServer(cart) {
-    const username = localStorage.getItem('username');
-    
-    if (!username) return;
-
-    try {
-        const response = await fetch('../PHP/update_cart.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                product_ids: cart,
-            }),
-        });
-
-        const result = await response.json();
-        if (result.status === 'success') {
-            console.log('Cart updated on server.');
-        } else {
-            console.error('Error updating cart:', result.error);
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}

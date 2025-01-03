@@ -205,7 +205,7 @@ header h1 {
     pointer-events: none; /* Prevent interaction */
 }
 
-/************************************THE-PRODUCTS************************************/
+/************************************SIDEBAR************************************/
   
 .products {
     display: grid;
@@ -265,38 +265,4 @@ button:hover {
     font-size: 12px;
     border-radius: 5px;
     font-weight: bold;
-}
-
-
-/************************************THE-CART************************************/
-.cart {
-    max-height: 500px;
-    overflow-y: auto;
-}
-  
-.cart-summary, .product-summary {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
-    font-size: 1em;
-    color: white;
-    border-top: 1px solid #ddd;
-}
-  
-.cart-summary {
-    font-weight: bold;
-}
-  
-.product-summary button {
-    background-color: #ff4d4d;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-size: 0.9em;
-}
-  
-.product-summary button:hover {
-    background-color: #ff3333;
 }
