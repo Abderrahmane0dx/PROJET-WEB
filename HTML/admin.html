@@ -33,11 +33,6 @@
                     <span class="material-icons">receipt_long</span>
                     <h3>Orders</h3>
                 </a>
-                <a href="">
-                    <span class="material-icons">mail_outline</span>
-                    <h3>Messages</h3>
-                    <span class="message-count">26</span>
-                </a>
                 <a href="../HTML/HOMEPAGE.html">
                     <span class="material-icons">inventory</span>
                     <h3>Products</h3>
@@ -164,85 +159,41 @@
                 </div>
                 
                 <!----------End Of The Top---------->
-                <!----------Start Of RECENT UPDATES---------->
-                <div class="recent-updates">
-                    <h2>Recent Updates</h2>
-                    <div class="updates">
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                
+                <!----------End Of The Top---------->
+                    <div class="add-products">
+                        <h2>Add New Product</h2> 
+                        <form id="productForm">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" name="name" required placeholder="e.g. White Headphones">
                             </div>
-                            <div class="message">
-                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
-                                <small class="text-muted">2 Minutes Ago</small>
+                            
+                            <div class="form-group">
+                                <label>Price ($)</label>
+                                <input type="number" name="price" step="0.01" required placeholder="e.g. 97.99">
                             </div>
-                        </div>
-
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="quantity" required placeholder="e.g. 12">
                             </div>
-                            <div class="message">
-                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
-                                <small class="text-muted">2 Minutes Ago</small>
+                
+                            <div class="form-group">
+                                <label>Device Type</label>
+                                <input type="text" name="device_type" placeholder="e.g. Headphone">
                             </div>
-                        </div>
-
-                        <div class="update">
-                            <div class="profile-photo">
-                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                
+                            <div class="form-group">
+                                <label>Photo URL</label>
+                                <input type="url" name="photo_url" required placeholder="e.g. https://i.postimg.cc/...">
                             </div>
-                            <div class="message">
-                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
-                                <small class="text-muted">2 Minutes Ago</small>
+                
+                            <div class="form-group full-width">
+                                <label>Description</label>
+                                <textarea name="description" rows="3" placeholder="Enter product description..."></textarea>
                             </div>
-                        </div>
-                    </div>
-                    <!---------End Of RECENT UPDATES---------->
-                    <div class="sales-analytics">
-                        <h2>Sales Analytics</h2>
-                        <div class="item online">
-                            <div class="icon">
-                             <span class="material-icons">shopping_cart</span>
-                            </div>
-                            <div class="right">
-                              <div class="info">
-                                <h3>Online Orders</h3>
-                                <small class="text-muted">Last 24 Hours</small>
-                              </div>
-                             <h5 class="success">+39%</h5>
-                             <h3>3849</h3>
-                            </div>
-                        </div>
-
-                        <div class="item offline">
-                            <div class="icon">
-                             <span class="material-icons">local_mall</span>
-                            </div>
-                            <div class="right">
-                             <div class="info">
-                                <h3>offline Orders</h3>
-                                <small class="text-muted">Last 24 Hours</small>
-                             </div>
-                             <h5 class="danger">-17%</h5>
-                             <h3>1100</h3>
-                            </div>
-                        </div>
-
-                        <div class="item customers">
-                            <div class="icon">
-                             <span class="material-icons">person</span>
-                            </div>
-                            <div class="right">
-                             <div class="info">
-                                <h3>New Customres</h3>
-                                <small class="text-muted">Last 24 Hours</small>
-                             </div>
-                             <h5 class="success">+25%</h5>
-                             <h3>849</h3>
-                            </div>
-                        </div>
-                    
+                        </form>               
                         <div class="item addproduct">
                          <div>
                             <span class="material-icons">add</span>

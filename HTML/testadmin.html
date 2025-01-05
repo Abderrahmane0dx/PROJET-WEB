@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream House</title>
+    <link rel="stylesheet" href="../CSS/testadmin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    
+    <div class="container">
+        
+        <!--------------------------------------THE-NAV-BAR-------------------------------------->
+        <nav id="sidebar">
+            <ul>
+             <li>
+                 <span class="logo">DreamHouse</span>
+                 <button id="toggle-btn" class="rotate">
+                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M440-240 200-480l240-240 56 56-183 184 183 184-56 56Zm264 0L464-480l240-240 56 56-183 184 183 184-56 56Z"/></svg>
+                 </button>
+             </li>
+             <li>
+                 <a href="../HTML/HOMEPAGE.html"> 
+                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+                    <span>Home Page</span>
+                 </a>
+             </li>
+             <li>
+                 <a href="../HTML/WISHLIST.html">
+                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/></svg>
+                    <span>Wish List</span>
+                 </a>
+             </li>
+             <li class="active">
+                 <a href="../HTML/CART.html">
+                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM246-720l96 200h280l110-200H246Zm-38-80h590q23 0 35 20.5t1 41.5L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68-39.5t-2-78.5l54-98-144-304H40v-80h130l38 80Zm134 280h280-280Z"/></svg>
+                    <span>Cart</span>
+                 </a>
+             </li>
+            </ul>
+        </nav>
+        
+        <main>
+            <h1>Dashboard</h1>
+            <div class="date">
+                <input type="date" name="" id="">
+            </div>
+
+            <div class="insights">
+                <!----------------Start Of Sales---------------->
+                <div class="sales">
+                    <span class="material-icons">analytics</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1>$25,024</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>81%</p>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                </div>
+                <!----------------End Of Sales---------------->
+                <!----------------Start Of Expenses---------------->
+                <div class="expenses">
+                    <span class="material-icons">bar_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Expenses</h3>
+                            <h1>$14,160</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>62%</p>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                </div>
+                <!----------------End Of Expenses---------------->
+                <!----------------Start Of Income---------------->
+                <div class="income">
+                    <span class="material-icons">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1>$10,864</h1>
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx='38' cy='38' r='36'></circle>
+                            </svg>
+                            <div class="number">
+                                <p>44%</p>
+                            </div>
+                        </div>
+                        <small class="text-muted">Last 24 Hours</small>
+                    </div>
+                </div>
+                <!----------------End Of Income---------------->
+            </div>
+
+            <div class="recent-orders">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Product Number</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>      
+                </table>
+                <a href="">Show All</a>
+            </div>
+        </main>
+        <!----------------------End Of The Main---------------------->
+        <!----------------------Start Of The Right Part---------------------->
+        <div class="right">
+
+                <!----------Start Of The Top---------->
+                <div class="top">
+                    <button id="menu-btn">
+                        <span class="material-icons">menu</span>
+                    </button>
+                    <div class="theme-toggler">
+                        <span class="material-icons active">light_mode</span>
+                        <span class="material-icons">dark_mode</span>
+                    </div>
+                    <div class="profile">
+                        <div class="info">
+                            <p>Hey, <b>Daniel</b></p>
+                            <small class="text-muted">Admin</small>
+                        </div>
+                        <div class="profile-photo">
+                            <img src="">
+                        </div>
+                    </div>
+                </div>
+                
+                <!----------End Of The Top---------->
+                <!----------Start Of RECENT UPDATES---------->
+                <div class="recent-updates">
+                    <h2>Recent Updates</h2>
+                    <div class="updates">
+                        <div class="update">
+                            <div class="profile-photo">
+                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                            </div>
+                            <div class="message">
+                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
+                                <small class="text-muted">2 Minutes Ago</small>
+                            </div>
+                        </div>
+
+                        <div class="update">
+                            <div class="profile-photo">
+                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                            </div>
+                            <div class="message">
+                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
+                                <small class="text-muted">2 Minutes Ago</small>
+                            </div>
+                        </div>
+
+                        <div class="update">
+                            <div class="profile-photo">
+                                <img src="../PROJECT-PHOTOS/RANDOM/logo.png">
+                            </div>
+                            <div class="message">
+                                <p><b>Mike Tyson</b> recieved his order of Night lion tech GPS drone.</p>
+                                <small class="text-muted">2 Minutes Ago</small>
+                            </div>
+                        </div>
+                    </div>
+                    <!---------End Of RECENT UPDATES---------->
+                    <div class="sales-analytics">
+                        <h2>Sales Analytics</h2>
+                        <div class="item online">
+                            <div class="icon">
+                             <span class="material-icons">shopping_cart</span>
+                            </div>
+                            <div class="right">
+                              <div class="info">
+                                <h3>Online Orders</h3>
+                                <small class="text-muted">Last 24 Hours</small>
+                              </div>
+                             <h5 class="success">+39%</h5>
+                             <h3>3849</h3>
+                            </div>
+                        </div>
+
+                        <div class="item offline">
+                            <div class="icon">
+                             <span class="material-icons">local_mall</span>
+                            </div>
+                            <div class="right">
+                             <div class="info">
+                                <h3>offline Orders</h3>
+                                <small class="text-muted">Last 24 Hours</small>
+                             </div>
+                             <h5 class="danger">-17%</h5>
+                             <h3>1100</h3>
+                            </div>
+                        </div>
+
+                        <div class="item customers">
+                            <div class="icon">
+                             <span class="material-icons">person</span>
+                            </div>
+                            <div class="right">
+                             <div class="info">
+                                <h3>New Customres</h3>
+                                <small class="text-muted">Last 24 Hours</small>
+                             </div>
+                             <h5 class="success">+25%</h5>
+                             <h3>849</h3>
+                            </div>
+                        </div>
+                    
+                        <div class="item addproduct">
+                         <div>
+                            <span class="material-icons">add</span>
+                            <h3>Add Product</h3>
+                         </div>
+                        </div>
+                    </div>    
+                </div> 
+        </div>
+    </div>
+    <script src="../JS/orders.js"></script>
+    <script src="../JS/index.js"></script>
+</body>
+</html>

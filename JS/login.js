@@ -39,7 +39,7 @@ registerBtn.addEventListener('click',()=>{
 const loginhandeling = async (event) => {
     event.preventDefault();
 
-    //getting the UserName And The PassWord from the inputs:
+    // Getting the UserName And The PassWord from the inputs:
     const username = usernameInput.value;
     const password = passwordInput.value;
 
@@ -49,7 +49,7 @@ const loginhandeling = async (event) => {
     };
 
     try {
-        //calling the login.php file with the fetch:
+        // Calling the login.php file with the fetch:
         const response = await fetch('../PHP/login.php', {
             method: 'POST',
             headers: {
@@ -62,30 +62,37 @@ const loginhandeling = async (event) => {
 
         if (result.status === 'success') {
             localStorage.setItem('username', result.username);
-            localStorage.setItem('name', result.name);
-            alert("Login successful");
 
-            // Fetch the wishlist after login
-            const wishlistResponse = await fetch('../PHP/get_wishlist.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username: result.username })
-            });
-
-            const wishlistResult = await wishlistResponse.json();
-            if (wishlistResult.status === 'success') {
-                // Save the wishlist to localStorage
-                localStorage.setItem('wishlist', JSON.stringify(wishlistResult.wishlist));
+            if (result.redirect === 'admin') {
+                alert("Admin login successful");
+                setTimeout(() => {
+                    window.location.href = '../HTML/admin.html';
+                }, 1500);
             } else {
-                // Initialize an empty wishlist if none found
-                localStorage.setItem('wishlist', JSON.stringify([]));
-            }
+                alert("Login successful");
 
-            setTimeout(() => {
-                window.location.href = '../HTML/testhomepage.html';
-            }, 1500);
+                // Fetch the wishlist after login
+                const wishlistResponse = await fetch('../PHP/get_wishlist.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: result.username })
+                });
+
+                const wishlistResult = await wishlistResponse.json();
+                if (wishlistResult.status === 'success') {
+                    // Save the wishlist to localStorage
+                    localStorage.setItem('wishlist', JSON.stringify(wishlistResult.wishlist));
+                } else {
+                    // Initialize an empty wishlist if none found
+                    localStorage.setItem('wishlist', JSON.stringify([]));
+                }
+
+                setTimeout(() => {
+                    window.location.href = '../HTML/HOMEPAGE.html';
+                }, 1500);
+            }
         } else {
             showToast(result.error);
         }

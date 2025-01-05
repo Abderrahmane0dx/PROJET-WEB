@@ -26,24 +26,43 @@ $username = $data['username'];
 $password = $data['password'];
 
 try {
-    //La Requete SQL Pour Récuperer De La Base De Données:
+    // Fetch user details from the database
     $query = $connection->prepare("SELECT username, password FROM users WHERE username = ?");
     $query->execute([$username]);
     $user = $query->fetch(PDO::FETCH_ASSOC);
 
-    //Si L'Utilisateur Exist:
     if ($user) {
-        //Verification du mot de passe:
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['user'] = ['username' => $user['username']];
-            
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Login successful',
-                'username' => $user['username'],
-            ]);
+        // Special case for the admin
+        if ($user['username'] === 'admin') {
+            // Hash the input password using SHA2 and the same salt
+            $hashedAdminPassword = hash('sha256', 'salt' . $password); // Replicates SHA2(CONCAT('salt', password), 256)
+
+            if ($hashedAdminPassword === $user['password']) {
+                // Admin login successful
+                $_SESSION['user'] = ['username' => $user['username']];
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Admin login successful',
+                    'username' => $user['username'],
+                    'redirect' => 'admin'
+                ]);
+            } else {
+                echo json_encode(['error' => 'Invalid password']);
+            }
         } else {
-            echo json_encode(['error' => 'Invalid password']);
+            // Regular user password verification
+            if (password_verify($password, $user['password'])) {
+                // User login successful
+                $_SESSION['user'] = ['username' => $user['username']];
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Login successful',
+                    'username' => $user['username'],
+                    'redirect' => 'user'
+                ]);
+            } else {
+                echo json_encode(['error' => 'Invalid password']);
+            }
         }
     } else {
         echo json_encode(['error' => 'Invalid username']);
