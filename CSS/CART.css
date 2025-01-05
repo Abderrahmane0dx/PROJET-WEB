@@ -286,7 +286,39 @@ button:hover {
 .cart-summary {
     font-weight: bold;
 }
-  
+
+.delivery-address {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    gap: 5px; /* Space between label and input */
+}
+
+.delivery-address label {
+    font-size: 0.9em;
+    color: var(--secondary-text-clr);
+}
+
+#delivery-address {
+    padding: 10px;
+    border: 1px solid var(--line-clr);
+    border-radius: 5px;
+    background-color: var(--base-clr);
+    color: var(--text-clr);
+    font-size: 0.9em;
+    width: 100%; /* Matches cart width */
+    box-sizing: border-box; /* Ensures padding doesn’t increase width */
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#delivery-address:focus {
+    border-color: var(--accent-clr);
+    background-color: var(--hover-clr);
+}
+
+
+
 .product-summary button {
     background-color: #ff4d4d;
     border: none;

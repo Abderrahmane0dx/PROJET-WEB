@@ -59,11 +59,15 @@
              <!--------------------------------------THE-CART-------------------------------------->
              <div class="cart" id="cart">
                  <h2>Cart</h2>
-             <div id="cart-items"></div>
-             <div class="cart-summary">
-                 <span>Total:</span> <span id="cart-total">0 €</span>
-             </div>
-                 <button onclick="confirmPurchase()">Buy</button>
+                 <div id="cart-items"></div>
+                 <div class="cart-summary">
+                     <span>Total:</span> <span id="cart-total">0 €</span>
+                 </div>
+                 <div class="delivery-address">
+                    <label for="delivery-address">Delivery Address:</label>
+                    <textarea id="delivery-address" placeholder="Enter your delivery address..." rows="3"></textarea>
+                </div>
+                 <button onclick="confirmPurchase()">Shop Now</button>
              </div>
             </div>
         </div>

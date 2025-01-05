@@ -247,15 +247,66 @@ function updateCart() {
     cartTotal.textContent = total + " €";
 }
 
-function confirmPurchase() {
+async function confirmPurchase() {
     if (Object.keys(cart).length === 0) {
-      alert("Votre panier est vide !");
-      return;
+        alert("Votre panier est vide !");
+        return;
     }
-    alert("Merci pour votre achat !");
-    cart = {};  // Réinitialiser le panier
-    updateCart();
-    displayProducts();
+
+    // Get the delivery address from the input field
+    const deliveryAddress = document.getElementById("delivery-address").value;
+
+    // Check if the delivery address field is filled
+    if (!deliveryAddress) {
+        alert("Veuillez remplir l'adresse de livraison !");
+        return;
+    }
+
+    // Ask for confirmation to place the order
+    const confirmOrder = confirm("Voulez-vous confirmer votre achat ?");
+    if (confirmOrder) {
+        try {
+            const username = localStorage.getItem('username');
+
+            // Calculate the total price based on the cart data
+            let totalPrice = 0;
+            Object.values(cart).forEach(item => {
+                totalPrice += item.price * item.quantity;
+            });
+
+            const orderData = {
+                username: username,
+                total_price: totalPrice.toFixed(2),  // Ensure the price is formatted to two decimal places
+                delivery_address: deliveryAddress,
+                cart: cart
+            };
+
+            // Send order data to the backend
+            const response = await fetch("../PHP/confirm_order.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            const result = await response.json();
+
+            console.log(result)
+
+            if (result.status === "success") {
+                alert("Merci pour votre achat !");
+                cart = {};  // Clear the cart
+                updateCart();  // Update the cart display
+                displayProducts();  // Display the products again
+            } else {
+                alert("Erreur lors de la confirmation de l'achat. Veuillez réessayer.");
+            }
+        } catch (error) {
+            console.error("Erreur lors de l'envoi de la commande:", error);
+            alert("Une erreur s'est produite. Veuillez réessayer.");
+        }
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {

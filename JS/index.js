@@ -30,21 +30,55 @@ themeToggler.addEventListener('click', () => {
     localStorage.setItem('theme', isDark ? 'dark' : 'light');
 });
 
-// fill orders in the table:
-Orders.forEach(order => {
-    const tr = document.createElement('tr');
-    const trcontent = `
-        <td>${order.productName}</td>
-        <td>${order.productNumber}</td>
-        <td>${order.paymentStatus}</td>
-        <td class="${order.Shipping === 'Declined' ? 'danger' :
-                   order.Shipping === 'Pending' ? 'warning' :
-                   'primary'}">${order.Shipping}</td>
-        <td class="primary">Details</td>
-    `;
-    tr.innerHTML = trcontent;
-    document.querySelector('table tbody').appendChild(tr);
+async function displayOrders() {
+    try {
+        // Fetch the orders from the backend
+        const response = await fetch('../PHP/get_orders.php');
+        const orders = await response.json();
+
+        // Debugging: Log the orders data to the console
+        console.log('Orders:', orders);
+
+        // Check if there's an error in the response
+        if (orders.status === 'error') {
+            alert(orders.message);
+            return;
+        }
+
+        // Get the table body element where we will display the orders
+        const tableBody = document.querySelector('table tbody');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+        // Loop through each order and create table rows
+        orders.orders.forEach(order => {
+            const tr = document.createElement('tr');
+            
+            // Format the table row content based on the order data
+            const trContent = `
+                <td>${order.username}</td>
+                <td>${order.order_date}</td> <!-- Display the date -->
+                <td>${order.order_time}</td> <!-- Display the time -->
+                <td>${order.total_price}</td>
+                <td class="${order.order_status === 'Processing' ? 'primary' : 'warning'}">${order.order_status}</td>
+                <td>${order.delivery_address}</td>
+                <td class="primary">Details</td>
+            `;
+            
+            tr.innerHTML = trContent;
+            tableBody.appendChild(tr);
+        });
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        alert("Failed to load orders. Please try again.");
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Call the function to display the orders when the page loads
+    displayOrders();
 });
+
 
 // Add Product Form Handler
 const productForm = document.getElementById('productForm');
