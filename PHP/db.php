@@ -4,7 +4,7 @@
 $servername = "localhost";  // Your database server
 $dbname = "e_commerce";     // Your database name
 $username = "root";         // Your database username
-$password = "Dx04&bin02a";             // Your database password
+$password = "";             // Your database password
 
 try {
     // Create a PDO connection
