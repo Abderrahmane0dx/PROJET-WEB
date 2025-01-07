@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream House</title>
+    <link rel="stylesheet" href="../CSS/ORDERS.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+    <div class="container">
+        <!----------------------Start Of The Aside Part---------------------->
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="../PROJECT-PHOTOS/RANDOM/dior.png">
+                    <h2>Dream<span class="housecolor">House</span></h2>
+                </div>
+                <div class="close" id="closebtn">
+                    <i class="material-icons">close</i>
+                </div>
+            </div>    
+            <div class="sidebar">
+                <a href="../HTML/admin.html">
+                    <span class="material-icons">dashboard</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="../HTML/HOMEPAGE.html">
+                    <span class="material-icons">home</span>
+                    <h3>Home Page</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-icons">receipt_long</span>
+                    <h3>Orders</h3>
+                </a>
+                <a href="../HTML/PRODUCTS.html">
+                    <span class="material-icons">add</span>
+                    <h3>Manage Product</h3>
+                </a>
+            </div>
+        </aside>
+        <!----------------------End Of The Aside Part---------------------->
+        <!----------------------Start Of The Main---------------------->
+        <main>
+            <h1>Dashboard</h1>
+
+            <div class="recent-orders">
+                <h2>All Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Update</th>
+                            <th>Username</th>
+                            <th>Order Date</th>
+                            <th>Order Time</th>
+                            <th>Total Price</th>
+                            <th>Order Status</th>
+                            <th>Delivery Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Order rows will be inserted here -->
+                    </tbody>     
+                </table>
+            </div>
+        </main>
+        <!----------------------End Of The Main---------------------->
+        <!----------------------Start Of The Right Part---------------------->
+        <div class="right">
+
+                <!----------Start Of The Top---------->
+                <div class="top">
+                    <button id="menu-btn">
+                        <span class="material-icons">menu</span>
+                    </button>
+                    <div class="theme-toggler">
+                        <span class="material-icons active">light_mode</span>
+                        <span class="material-icons">dark_mode</span>
+                    </div>
+                    <div class="profile">
+                        <div class="info">
+                            <p>Hey, <b>Abderrahmane</b></p>
+                            <small class="text-muted">Admin</small>
+                        </div>
+                        <div class="profile-photo">
+                            <img src="">
+                        </div>
+                    </div>
+                </div>
+                
+                <!----------End Of The Top---------->
+                
+                <!----------End Of The Top---------->
+                <div class="status-update">
+                    <h2>Update Order Status</h2>
+                    <div class="status-form">
+                        <select id="statusSelect" class="status-select">
+                            <option value="">Select Status</option>
+                            <option value="ACCEPTED">Accepted</option>
+                            <option value="CANCELED">Canceled</option>
+                            <option value="PENDING">Pending</option>
+                        </select>
+                        <div class="item update-status">
+                            <div>
+                                <span class="material-icons">update</span>
+                                <h3>Update Status</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   
+        </div>
+    </div>
+    <script src="../JS/orders.js"></script>
+</body>
+</html>

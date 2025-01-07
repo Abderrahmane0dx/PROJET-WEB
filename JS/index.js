@@ -32,38 +32,32 @@ themeToggler.addEventListener('click', () => {
 
 async function displayOrders() {
     try {
-        // Fetch the orders from the backend
         const response = await fetch('../PHP/get_orders.php');
-        const orders = await response.json();
+        const data = await response.json();
 
-        // Debugging: Log the orders data to the console
-        console.log('Orders:', orders);
-
-        // Check if there's an error in the response
-        if (orders.status === 'error') {
-            alert(orders.message);
+        if (data.status === 'error') {
+            alert(data.message);
             return;
         }
 
-        // Get the table body element where we will display the orders
+        const orders = data.orders;
         const tableBody = document.querySelector('table tbody');
-        tableBody.innerHTML = ''; // Clear any existing rows
+        tableBody.innerHTML = '';
 
-        // Loop through each order and create table rows
-        orders.orders.forEach(order => {
+        // Sort orders by date and limit to 5 most recent
+        const recentOrders = orders.sort((a, b) => new Date(b.order_date) - new Date(a.order_date)).slice(0, 5);
+
+        recentOrders.forEach(order => {
+            const statusClass = `status-${order.order_status.toLowerCase()}`;
             const tr = document.createElement('tr');
-            
-            // Format the table row content based on the order data
             const trContent = `
                 <td>${order.username}</td>
-                <td>${order.order_date}</td> <!-- Display the date -->
-                <td>${order.order_time}</td> <!-- Display the time -->
+                <td>${order.order_date}</td>
+                <td>${order.order_time}</td>
                 <td>${order.total_price}</td>
-                <td class="${order.order_status === 'Processing' ? 'primary' : 'warning'}">${order.order_status}</td>
+                <td class="${statusClass}">${order.order_status}</td>
                 <td>${order.delivery_address}</td>
-                <td class="primary">Details</td>
             `;
-            
             tr.innerHTML = trContent;
             tableBody.appendChild(tr);
         });

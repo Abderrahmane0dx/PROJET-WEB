@@ -373,6 +373,43 @@ main table tbody tr:last-child td{
     border: none;
 }
 
+/* Style the radio button */
+input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-primary); /* Blue border */
+    background-color: var(--color-white); /* White background */
+    border-radius: 50%;
+    appearance: none;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Style the radio button when checked */
+input[type="radio"]:checked {
+    background-color: var(--color-primary); /* Blue background when selected */
+    border-color: var(--color-primary); /* Blue border when selected */
+}
+
+/* Focused state - makes it a bit more accessible and visible */
+input[type="radio"]:focus {
+    box-shadow: 0 0 5px var(--color-primary); /* Blue glow on focus */
+}
+
+/* Dark mode adjustments */
+.dark-theme-variables input[type="radio"] {
+    border-color: var(--color-primary); /* Same blue border */
+    background-color: var(--color-dark); /* Dark background */
+}
+
+.dark-theme-variables input[type="radio"]:checked {
+    background-color: var(--color-primary); /* Blue background when selected */
+    border-color: var(--color-primary); /* Blue border */
+}
+
+
+
 main .recent-orders a{
     text-align: center;
     display: block;
@@ -574,7 +611,7 @@ main .recent-orders a{
     }
 }
 
-.right .add-products .addproduct{
+.right .add-products .item{
     background-color: transparent;
     border: 2px dashed var(--color-primary);
     color: var(--color-primary);
@@ -583,13 +620,13 @@ main .recent-orders a{
     justify-content: center;
 }
 
-.right .add-products .addproduct div{
+.right .add-products .item div{
     display: flex;
     align-items: center;
     gap: 0.6rem;
 }
 
-.right .add-products .addproduct div h3{
+.right .add-products .item div h3{
     font-weight: 600;
 }
 
@@ -748,8 +785,8 @@ main .recent-orders a{
         position: absolute;
         left: 1rem;
     }
-
-    .right .top .button span{
+                  
+    .right .top .button span{         
         font-size: 2rem;
     }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dream House</title>
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="../CSS/PRODUCTS.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
@@ -21,7 +21,7 @@
                 </div>
             </div>    
             <div class="sidebar">
-                <a href="#" class="active">
+                <a href="../HTML/admin.html">
                     <span class="material-icons">dashboard</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -33,7 +33,7 @@
                     <span class="material-icons">receipt_long</span>
                     <h3>Orders</h3>
                 </a>
-                <a href="../HTML/PRODUCTS.html">
+                <a href="#" class="active">
                     <span class="material-icons">add</span>
                     <h3>Manage Product</h3>
                 </a>
@@ -43,91 +43,25 @@
         <!----------------------Start Of The Main---------------------->
         <main>
             <h1>Dashboard</h1>
-            <div class="date">
-                <input type="date" name="" id="">
-            </div>
-
-            <div class="insights">
-                <!----------------Start Of Sales---------------->
-                <div class="sales">
-                    <span class="material-icons">analytics</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Sales</h3>
-                            <h1>$25,024</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>81%</p>
-                            </div>
-                        </div>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                </div>
-                <!----------------End Of Sales---------------->
-                <!----------------Start Of Expenses---------------->
-                <div class="expenses">
-                    <span class="material-icons">bar_chart</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Expenses</h3>
-                            <h1>$14,160</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>62%</p>
-                            </div>
-                        </div>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                </div>
-                <!----------------End Of Expenses---------------->
-                <!----------------Start Of Income---------------->
-                <div class="income">
-                    <span class="material-icons">stacked_line_chart</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Sales</h3>
-                            <h1>$10,864</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>44%</p>
-                            </div>
-                        </div>
-                        <small class="text-muted">Last 24 Hours</small>
-                    </div>
-                </div>
-                <!----------------End Of Income---------------->
-            </div>
-
+        
             <div class="recent-orders">
                 <h2>Recent Orders</h2>
                 <table>
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>Order Date</th>
-                            <th>Order Time</th>
-                            <th>Total Price</th>
-                            <th>Order Status</th>
-                            <th>Delivery Address</th>
+                            <th>Photo</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Device Type</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>Select</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Order rows will be inserted here -->
                     </tbody>     
                 </table>
-                <a href="../HTML/ORDERS.html">Show All</a>
             </div>
         </main>
         <!----------------------End Of The Main---------------------->
@@ -196,10 +130,22 @@
                             <h3>Add Product</h3>
                          </div>
                         </div>
+                        <div class="item updateproduct">
+                            <div>
+                                <span class="material-icons">edit</span>
+                                <h3>Update Product</h3>
+                            </div>
+                        </div>
+                        <div class="item deleteproduct">
+                            <div>
+                                <span class="material-icons">delete</span>
+                                <h3>Delete Product</h3>
+                            </div>
+                        </div>
                     </div>    
                 </div> 
         </div>
     </div>
-    <script src="../JS/index.js"></script>
+    <script src="../JS/PRODUCTS.js"></script>
 </body>
 </html>

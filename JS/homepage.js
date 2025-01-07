@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 initializeWishlist();
-                initializeCart();
+
             } else {
                 console.error("Error fetching products:", result.message);
             }

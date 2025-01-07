@@ -6,18 +6,16 @@ include('db.php');
 header('Content-Type: application/json');
 
 try {
-    // Query to fetch all orders from the database
-    $query = $connection->prepare("SELECT * FROM orders");
+    // Query to fetch the 5 most recent orders
+    $query = $connection->prepare("SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
     $query->execute();
-    
-    // Fetch all orders
+
+    // Fetch the orders
     $orders = $query->fetchAll(PDO::FETCH_ASSOC);
 
     if ($orders) {
-        // Return orders as JSON
         echo json_encode(['status' => 'success', 'orders' => $orders]);
     } else {
-        // No orders found, return an empty array
         echo json_encode(['status' => 'success', 'orders' => []]);
     }
 } catch (PDOException $e) {
