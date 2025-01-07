@@ -32,7 +32,7 @@ try {
     // Insert the order with separate date and time
     $query = $connection->prepare("
         INSERT INTO orders (username, order_date, order_time, total_price, order_status, delivery_address)
-        VALUES (?, ?, ?, ?, 'Processing', ?)
+        VALUES (?, ?, ?, ?, 'PENDING', ?)
     ");
     $query->execute([$username, $order_date, $order_time, $total_price, $delivery_address]);
 
